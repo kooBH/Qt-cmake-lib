@@ -7,7 +7,7 @@ set(COMPILE_OPTION)
 set(INCL)
 set(SRC)
 
-#### Qt5 FrameWork ####
+################ Qt5 FrameWork #################
 
 if(UNIX AND NOT APPLE)
   list(APPEND LINKLIBS
@@ -38,21 +38,42 @@ elseif(APPLE)
   # list(APPEND Qt5::Core Qt5::Gui Qt5::Widgets)
 endif()
 
-
-
 include_directories(
   include/QtCore
   include/QtGui
   include/QtWidgets
-)
+  )
+
+################################################
+
+list(APPEND SRC
+  )
+list(APPEND INCL
+  )
+
+if(WIN32 AND MSVC)
+  list(APPEND LINKLIBS)
+  list(APPEND COMPILE_OPTION)
+else()
+  list(APPEND LINKLIBS
+    -lm
+    )
+  list(APPEND COMPILE_OPTION
+	    #gdb debugging option
+	    -g
+    )
+endif()
 
 
+
+
+################################################
 
 add_executable(${PROJECT_NAME} ${SRC})
 
 target_include_directories(${PROJECT_NAME}
-	PRIVATE
-	${INCL}
+  PRIVATE
+  ${INCL}
   )
 
 target_link_libraries(${PROJECT_NAME} ${LINKLIBS})
